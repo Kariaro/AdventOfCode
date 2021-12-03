@@ -7,11 +7,11 @@ import hardcoded.util.Utils;
 public class Day1 {
 	public static void main(String[] args) throws Exception {
 		System.out.println("Day 1\n");
-		partOne();
-		partTwo();
+		System.out.printf("PartOne: %d\n", partOne());
+		System.out.printf("PartTwo: %d\n", partTwo());
 	}
 	
-	public static void partOne() throws Exception {
+	public static int partOne() throws Exception {
 		int[] array = Files.readAllLines(Utils.of("day1/input")).stream().mapToInt(str -> Integer.parseInt(str)).toArray();
 		
 		int count = 0;
@@ -26,10 +26,10 @@ public class Day1 {
 			last = value;
 		}
 		
-		System.out.printf("PartOne: %d\n", count);
+		return count;
 	}
 	
-	public static void partTwo() throws Exception {
+	public static int partTwo() throws Exception {
 		int[] array = Files.readAllLines(Utils.of("day1/input")).stream().mapToInt(str -> Integer.parseInt(str)).toArray();
 		
 		int count = 0;
@@ -44,6 +44,6 @@ public class Day1 {
 			last = value;
 		}
 		
-		System.out.printf("PartTwo: %d\n", count);
+		return count;
 	}
 }

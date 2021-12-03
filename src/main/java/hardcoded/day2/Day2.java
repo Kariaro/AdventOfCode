@@ -8,11 +8,11 @@ import hardcoded.util.Utils;
 public class Day2 {
 	public static void main(String[] args) throws Exception {
 		System.out.println("Day 2\n");
-		partOne();
-		partTwo();
+		System.out.printf("PartOne: %d\n", partOne());
+		System.out.printf("PartTwo: %d\n", partTwo());
 	}
 	
-	public static void partOne() throws Exception {
+	public static int partOne() throws Exception {
 		List<String> list = Files.readAllLines(Utils.of("day2/input"));
 		
 		int horizontal_position = 0;
@@ -34,10 +34,10 @@ public class Day2 {
 		
 		int result = horizontal_position * depth;
 		
-		System.out.printf("PartOne: %d\n", result);
+		return result;
 	}
 	
-	public static void partTwo() throws Exception {
+	public static int partTwo() throws Exception {
 		List<String> list = Files.readAllLines(Utils.of("day2/input"));
 		
 		int horizontal_position = 0;
@@ -61,6 +61,6 @@ public class Day2 {
 		
 		int result = horizontal_position * depth;
 		
-		System.out.printf("PartTwo: %d\n", result);
+		return result;
 	}
 }
