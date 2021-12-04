@@ -6,14 +6,14 @@ import hardcoded.util.Utils;
 
 public class Day1 {
 	public static void main(String[] args) throws Exception {
+		int[] array = Files.readAllLines(Utils.of("day1/input")).stream().mapToInt(Integer::parseInt).toArray();
+		
 		System.out.println("Day 1\n");
-		System.out.printf("PartOne: %d\n", partOne());
-		System.out.printf("PartTwo: %d\n", partTwo());
+		System.out.printf("PartOne: %d\n", partOne(array));
+		System.out.printf("PartTwo: %d\n", partTwo(array));
 	}
 	
-	public static int partOne() throws Exception {
-		int[] array = Files.readAllLines(Utils.of("day1/input")).stream().mapToInt(str -> Integer.parseInt(str)).toArray();
-		
+	public static int partOne(int[] array) throws Exception {
 		int count = 0;
 		
 		int last = array[0];
@@ -29,9 +29,7 @@ public class Day1 {
 		return count;
 	}
 	
-	public static int partTwo() throws Exception {
-		int[] array = Files.readAllLines(Utils.of("day1/input")).stream().mapToInt(str -> Integer.parseInt(str)).toArray();
-		
+	public static int partTwo(int[] array) throws Exception {
 		int count = 0;
 		
 		int last = Integer.MAX_VALUE;
