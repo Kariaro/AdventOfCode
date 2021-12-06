@@ -1,6 +1,5 @@
 package hardcoded.day4;
 
-import java.nio.file.Files;
 import java.util.*;
 
 import hardcoded.util.Utils;
@@ -48,7 +47,7 @@ public class Day4 {
 	
 	public static void main(String[] args) throws Exception {
 		System.out.println("Day 4\n");
-		List<String> lines = Files.readAllLines(Utils.of("day4/input"));
+		List<String> lines = Utils.readAllLines("day4/input");
 		
 		int[] random = Arrays.asList(lines.get(0).split(",")).stream().mapToInt(Integer::parseInt).toArray();
 		

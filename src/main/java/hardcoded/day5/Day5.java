@@ -1,7 +1,8 @@
 package hardcoded.day5;
 
-import java.nio.file.Files;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import hardcoded.util.Utils;
 
@@ -52,7 +53,7 @@ public class Day5 {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		List<Line> lines = Files.readAllLines(Utils.of("day5/input")).stream().map(Line::new).toList();
+		List<Line> lines = Utils.readAllLines("day5/input").stream().map(Line::new).toList();
 		
 		System.out.println("Day 5\n");
 		System.out.printf("PartOne: %d\n", partOne(lines));

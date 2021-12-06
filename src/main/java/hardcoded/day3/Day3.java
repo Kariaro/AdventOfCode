@@ -1,6 +1,5 @@
 package hardcoded.day3;
 
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -9,7 +8,7 @@ import hardcoded.util.Utils;
 
 public class Day3 {
 	public static void main(String[] args) throws Exception {
-		List<String> lines = Files.readAllLines(Utils.of("day3/input"));
+		List<String> lines = Utils.readAllLines("day3/input");
 		int bitsInLine = lines.get(0).length();
 		
 		System.out.println("Day 3\n");
