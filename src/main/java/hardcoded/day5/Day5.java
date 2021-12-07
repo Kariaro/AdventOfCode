@@ -29,12 +29,12 @@ public class Day5 {
 			if(y1 == y2) {
 				for(int x = minX; x <= maxX; x++) {
 					long point = getCoordinate(x, minY);
-					map.put(point, map.computeIfAbsent(point, v -> 0L) + 1L);
+					map.put(point, map.getOrDefault(point, 0L) + 1L);
 				}
 			} else if(x1 == x2) {
 				for(int y = minY; y <= maxY; y++) {
 					long point = getCoordinate(minX, y);
-					map.put(point, map.computeIfAbsent(point, v -> 0L) + 1L);
+					map.put(point, map.getOrDefault(point, 0L) + 1L);
 				}
 			} else {
 				int xd = x1 < x2 ? 1:-1;
@@ -42,7 +42,7 @@ public class Day5 {
 				int dd = Math.max(maxX - minX, maxY - minY);
 				for(int i = 0; i <= dd; i++) {
 					long point = getCoordinate(x1 + xd * i, y1 + yd * i);
-					map.put(point, map.computeIfAbsent(point, v -> 0L) + 1L);
+					map.put(point, map.getOrDefault(point, 0L) + 1L);
 				}
 			}
 		}
