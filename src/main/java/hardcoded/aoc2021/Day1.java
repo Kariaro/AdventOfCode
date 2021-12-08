@@ -1,14 +1,14 @@
-package hardcoded.day1;
+package hardcoded.aoc2021;
 
 import hardcoded.util.Utils;
 
 public class Day1 {
 	public static void main(String[] args) throws Exception {
-		int[] array = Utils.readAllLines("day1/input").stream().mapToInt(Integer::parseInt).toArray();
+		int[] array = Utils.readAllLines(2021, "day1").stream().mapToInt(Integer::parseInt).toArray();
 		
-		System.out.println("Day 1\n");
-		System.out.printf("PartOne: %d\n", partOne(array));
-		System.out.printf("PartTwo: %d\n", partTwo(array));
+		Utils.printf("Day 1\n");
+		Utils.printf("PartOne: %d\n", partOne(array));
+		Utils.printf("PartTwo: %d\n", partTwo(array));
 	}
 	
 	public static int partOne(int[] array) throws Exception {

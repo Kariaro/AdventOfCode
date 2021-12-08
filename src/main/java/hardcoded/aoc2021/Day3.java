@@ -1,4 +1,4 @@
-package hardcoded.day3;
+package hardcoded.aoc2021;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,12 +8,12 @@ import hardcoded.util.Utils;
 
 public class Day3 {
 	public static void main(String[] args) throws Exception {
-		List<String> lines = Utils.readAllLines("day3/input");
+		List<String> lines = Utils.readAllLines(2021, "day3");
 		int bitsInLine = lines.get(0).length();
 		
-		System.out.println("Day 3\n");
-		System.out.printf("PartOne: %d\n", partOne(lines, bitsInLine));
-		System.out.printf("PartTwo: %d\n", partTwo(lines, bitsInLine));
+		Utils.printf("Day 3\n");
+		Utils.printf("PartOne: %d\n", partOne(lines, bitsInLine));
+		Utils.printf("PartTwo: %d\n", partTwo(lines, bitsInLine));
 	}
 	
 	public static int partOne(List<String> lines, int bitsInLine) throws Exception {

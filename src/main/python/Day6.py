@@ -1,25 +1,27 @@
 import Utils as Utils
 
-def calculateLanternFish(list, days):
+def calculateLanternFish(lines, days):
     for i in range(days):
-        amount = list[0]
-        list = list[1:]
-        list[6] += amount
-        list.append(amount)
-    return sum(list)
+        amount = lines[0]
+        lines = lines[1:]
+        lines[6] += amount
+        lines.append(amount)
+    return sum(lines)
 
-def partOne(list):
-    return calculateLanternFish(list.copy(), 80)
+@Utils.time_it_and_evaluate
+def partOne(lines):
+    return calculateLanternFish(lines.copy(), 80)
 
-def partTwo(list):
-    return calculateLanternFish(list.copy(), 256)
+@Utils.time_it_and_evaluate
+def partTwo(lines):
+    return calculateLanternFish(lines.copy(), 256)
 
 if __name__ == '__main__':
-    lines = [ int(x) for x in Utils.readAll('day6/input').rstrip().split(',') ]
-    list = [ 0 ] * 9
+    lines = [ int(x) for x in Utils.readAll(2021, 'day6').rstrip().split(',') ]
+    countList = [ 0 ] * 9
     for x in lines:
-        list[x] += 1
+        countList[x] += 1
 
     print('Day 6')
-    print('PartOne:', partOne(list))
-    print('PartTwo:', partTwo(list))
+    partOne(countList)
+    partTwo(countList)

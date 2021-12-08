@@ -1,11 +1,11 @@
 import Utils as Utils
 
-def partAll(list):
+def partAll(lines):
     horizontal_position = 0
     depth = 0
     aim = 0
     
-    for line in list:
+    for line in lines:
         if line.startswith('forward '):
             value = int(line[8:])
             horizontal_position += value
@@ -19,10 +19,17 @@ def partAll(list):
     
     return horizontal_position * aim, horizontal_position * depth
 
+@Utils.time_it_and_evaluate
+def partOne(lines):
+    return partAll(lines)[0]
+
+@Utils.time_it_and_evaluate
+def partTwo(lines):
+    return partAll(lines)[1]
+
 if __name__ == '__main__':
-    list = Utils.readAllLines('day2/input')
-    one, two = partAll(list)
+    lines = Utils.readAllLines(2021, 'day2')
     
     print('Day 2')
-    print('PartOne:', one)
-    print('PartTwo:', two)
+    partOne(lines)
+    partTwo(lines)

@@ -1,22 +1,23 @@
 import Utils as Utils
 
-def hasBingo(list, set):
+def hasBingo(lines, set):
     for i in range(5):
         vertical = True
         horizontal = True
         
         for j in range(5):
-            vertical &= list[i + j * 5] in set
-            horizontal &= list[j + i * 5] in set
+            vertical &= lines[i + j * 5] in set
+            horizontal &= lines[j + i * 5] in set
         
         if vertical or horizontal:
             return True
 
     return False
 
-def sumOfUnmarked(list, set):
-    return sum([ x for x in list if not x in set ])
+def sumOfUnmarked(lines, set):
+    return sum(x for x in lines if not x in set)
 
+@Utils.time_it_and_evaluate
 def partOne(random, boards):
     system = set()
     for x in random:
@@ -27,6 +28,7 @@ def partOne(random, boards):
 
     return 0
 
+@Utils.time_it_and_evaluate
 def partTwo(random, boards):
     system = set()
     for x in random:
@@ -46,10 +48,10 @@ def partTwo(random, boards):
     return 0
 
 if __name__ == '__main__':
-    lines = Utils.readAllLines('day4/input')
+    lines = Utils.readAllLines(2021, 'day4')
     random = [ int(x) for x in lines[0].split(',') ]
     boards = [ [ int(x) for x in ' '.join(lines[i:i+6]).split(' ') if not x == '' ] for i in range(1, len(lines), 6) ]
     
     print('Day 4')
-    print('PartOne:', partOne(random, boards))
-    print('PartTwo:', partTwo(random, boards))
+    partOne(random, boards)
+    partTwo(random, boards)

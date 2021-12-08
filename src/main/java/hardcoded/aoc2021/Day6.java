@@ -1,22 +1,22 @@
-package hardcoded.day6;
+package hardcoded.aoc2021;
 
-import java.util.*;
 import java.util.stream.LongStream;
 
 import hardcoded.util.Utils;
 
 public class Day6 {
 	public static void main(String[] args) throws Exception {
-		int[] days = Arrays.asList(Utils.readAll("day6/input").trim().split(",")).stream().mapToInt(Integer::parseInt).toArray();
+//		int[] days = Arrays.asList(Utils.readAll(2021, "day6").trim().split(",")).stream().mapToInt(Integer::parseInt).toArray();
+		int[] days = Utils.readIntArray(2021, "day6", ",");
 		
 		long[] scores = new long[9];
 		for(int i : days) {
 			scores[i]++;
 		}
 		
-		System.out.println("Day 6\n");
-		System.out.printf("PartOne: %d\n", partOne(scores));
-		System.out.printf("PartTwo: %d\n", partTwo(scores));
+		Utils.printf("Day 6\n");
+		Utils.printf("PartOne: %d\n", partOne(scores));
+		Utils.printf("PartTwo: %d\n", partTwo(scores));
 	}
 	
 	public static long calculateLanternFish(long[] array, int days) {

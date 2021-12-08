@@ -1,4 +1,4 @@
-package hardcoded.day5;
+package hardcoded.aoc2021;
 
 import java.util.HashMap;
 import java.util.List;
@@ -53,11 +53,11 @@ public class Day5 {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		List<Line> lines = Utils.readAllLines("day5/input").stream().map(Line::new).toList();
+		List<Line> lines = Utils.readAllLines(2021, "day5").stream().map(Line::new).toList();
 		
-		System.out.println("Day 5\n");
-		System.out.printf("PartOne: %d\n", partOne(lines));
-		System.out.printf("PartTwo: %d\n", partTwo(lines));
+		Utils.printf("Day 5\n");
+		Utils.printf("PartOne: %d\n", partOne(lines));
+		Utils.printf("PartTwo: %d\n", partTwo(lines));
 	}
 	
 	public static int partOne(List<Line> lines) throws Exception {

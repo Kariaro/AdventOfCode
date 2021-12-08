@@ -1,17 +1,19 @@
 import Utils as Utils
 
-def mostCommon(list, index):
-    return sum([ -1 if x[index] == '0' else 1 for x in list ]) >= 0
+def mostCommon(lines, index):
+    return sum(-1 if x[index] == '0' else 1 for x in lines) >= 0
 
-def partOne(list, bitsInLine):
-    digits  = [ mostCommon(list, x) for x in range(bitsInLine) ]
-    common  = ''.join([ '1' if x else '0' for x in digits ])
-    epsilon = ''.join([ '0' if x else '1' for x in digits ])
+@Utils.time_it_and_evaluate
+def partOne(lines, bitsInLine):
+    digits  = [ mostCommon(lines, x) for x in range(bitsInLine) ]
+    common  = ''.join('1' if x else '0' for x in digits)
+    epsilon = ''.join('0' if x else '1' for x in digits)
     return int(common, 2) * int(epsilon, 2)
 
-def partTwo(list, bitsInLine):
-    oxy_list = list.copy()
-    co2_list = list.copy()
+@Utils.time_it_and_evaluate
+def partTwo(lines, bitsInLine):
+    oxy_list = lines.copy()
+    co2_list = lines.copy()
     
     for x in range(bitsInLine):
         if len(oxy_list) > 1:
@@ -25,9 +27,9 @@ def partTwo(list, bitsInLine):
     return int(oxy_list[0], 2) * int(co2_list[0], 2)
 
 if __name__ == '__main__':
-    list = Utils.readAllLines('day3/input')
-    bitsInLine = len(list[0])
+    lines = Utils.readAllLines(2021, 'day3')
+    bitsInLine = len(lines[0])
     
     print('Day 3')
-    print('PartOne:', partOne(list, bitsInLine))
-    print('PartTwo:', partTwo(list, bitsInLine))
+    partOne(lines, bitsInLine)
+    partTwo(lines, bitsInLine)

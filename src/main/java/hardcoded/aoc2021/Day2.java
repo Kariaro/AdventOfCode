@@ -1,4 +1,4 @@
-package hardcoded.day2;
+package hardcoded.aoc2021;
 
 import java.util.List;
 
@@ -6,11 +6,11 @@ import hardcoded.util.Utils;
 
 public class Day2 {
 	public static void main(String[] args) throws Exception {
-		List<String> list = Utils.readAllLines("day2/input");
+		List<String> list = Utils.readAllLines(2021, "day2");
 		
-		System.out.println("Day 2\n");
-		System.out.printf("PartOne: %d\n", partOne(list));
-		System.out.printf("PartTwo: %d\n", partTwo(list));
+		Utils.printf("Day 2\n");
+		Utils.printf("PartOne: %d\n", partOne(list));
+		Utils.printf("PartTwo: %d\n", partTwo(list));
 	}
 	
 	public static int partOne(List<String> list) throws Exception {
@@ -32,7 +32,6 @@ public class Day2 {
 		}
 		
 		int result = horizontal_position * depth;
-		
 		return result;
 	}
 	
@@ -57,7 +56,6 @@ public class Day2 {
 		}
 		
 		int result = horizontal_position * depth;
-		
 		return result;
 	}
 }

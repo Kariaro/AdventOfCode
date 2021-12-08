@@ -1,4 +1,4 @@
-package hardcoded.day4;
+package hardcoded.aoc2021;
 
 import java.util.*;
 
@@ -46,9 +46,7 @@ public class Day4 {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		System.out.println("Day 4\n");
-		List<String> lines = Utils.readAllLines("day4/input");
-		
+		List<String> lines = Utils.readAllLines(2021, "day4");
 		int[] random = Arrays.asList(lines.get(0).split(",")).stream().mapToInt(Integer::parseInt).toArray();
 		
 		List<Board> boards = new ArrayList<>();
@@ -56,8 +54,9 @@ public class Day4 {
 			boards.add(new Board(lines.subList(i, i + 5), 5));
 		}
 		
-		System.out.printf("PartOne: %d\n", partOne(random, boards));
-		System.out.printf("PartTwo: %d\n", partTwo(random, boards));
+		Utils.printf("Day 4\n");
+		Utils.printf("PartOne: %d\n", partOne(random, boards));
+		Utils.printf("PartTwo: %d\n", partTwo(random, boards));
 	}
 	
 	public static int partOne(int[] randomNumbers, List<Board> boards) throws Exception {

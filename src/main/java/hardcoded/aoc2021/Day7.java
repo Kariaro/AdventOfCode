@@ -1,18 +1,17 @@
-package hardcoded.day7;
+package hardcoded.aoc2021;
 
-import java.util.*;
 import java.util.stream.IntStream;
 
 import hardcoded.util.Utils;
 
 public class Day7 {
 	public static void main(String[] args) throws Exception {
-		int[] array = Arrays.asList(Utils.readAll("day7/input").trim().split(",")).stream().mapToInt(Integer::parseInt).toArray();
+		int[] array = Utils.readIntArray(2021, "day7", ",");
 		int max = IntStream.of(array).max().getAsInt();
 		
-		System.out.println("Day 7\n");
-		System.out.printf("PartOne: %d\n", partOne(array, max));
-		System.out.printf("PartTwo: %d\n", partTwo(array, max));
+		Utils.printf("Day 7\n");
+		Utils.printf("PartOne: %d\n", partOne(array, max));
+		Utils.printf("PartTwo: %d\n", partTwo(array, max));
 	}
 	
 	public static int partOne(int[] array, int max) throws Exception {
