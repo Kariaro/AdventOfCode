@@ -6,7 +6,6 @@ import hardcoded.util.Utils;
 
 public class Day6 {
 	public static void main(String[] args) throws Exception {
-//		int[] days = Arrays.asList(Utils.readAll(2021, "day6").trim().split(",")).stream().mapToInt(Integer::parseInt).toArray();
 		int[] days = Utils.readIntArray(2021, "day6", ",");
 		
 		long[] scores = new long[9];
