@@ -1,6 +1,11 @@
-.settings/
-bin/**
-
-*.class
+# Eclipse
+/bin/
+/target/
 /.gradle/
-build/
+/build/
+
+# IntelliJ
+/.idea/
+
+# Custom
+/debug/
