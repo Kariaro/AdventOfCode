@@ -37,16 +37,16 @@ public class Djikstra {
 		Set<Node> unsettled = new HashSet<>();
 		unsettled.add(start);
 
-		while(unsettled.size() != 0) {
+		while (unsettled.size() != 0) {
 			Node current = getLowestDistance(unsettled);
 			long currentDistance = current.distance;
 			
 			unsettled.remove(current);
-			for(Map.Entry<Node, Long> entry : current.adjacent.entrySet()) {
+			for (Map.Entry<Node, Long> entry : current.adjacent.entrySet()) {
 				Node adjacent = entry.getKey();
-				if(!settled.contains(adjacent)) {
+				if (!settled.contains(adjacent)) {
 					long nextDistance = currentDistance + entry.getValue();
-					if(nextDistance < adjacent.distance) {
+					if (nextDistance < adjacent.distance) {
 						adjacent.distance = nextDistance;
 					}
 					
@@ -62,9 +62,9 @@ public class Djikstra {
 	private static Node getLowestDistance(Set<Node> unsettled) {
 		Node lowestNode = null;
 		long lowestDistance = Long.MAX_VALUE;
-		for(Node node : unsettled) {
+		for (Node node : unsettled) {
 			long nodeDistance = node.distance;
-			if(nodeDistance < lowestDistance) {
+			if (nodeDistance < lowestDistance) {
 				lowestDistance = nodeDistance;
 				lowestNode = node;
 			}

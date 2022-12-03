@@ -2,42 +2,51 @@ package me.hardcoded.aoc2021;
 
 import java.util.*;
 
+import me.hardcoded.util.DayBase;
 import me.hardcoded.util.Utils;
 
-public class Day12 {
+public class Day12 extends DayBase {
 	public static void main(String[] args) throws Exception {
-		List<String> lines = Utils.readAllLines(2021, "day12");
+		new Day12().run();
+	}
+	
+	public Day12() {
+		super(2021, 12);
+	}
+	
+	public void run() throws Exception {
+		List<String> lines = Utils.readAllLines(this);
 		
 		Map<String, List<String>> routes = new HashMap<>();
-		for(String line : lines) {
+		for (String line : lines) {
 			String[] parts = line.split("-");
 			List<String> a = routes.computeIfAbsent(parts[0], v -> new ArrayList<>());
 			List<String> b = routes.computeIfAbsent(parts[1], v -> new ArrayList<>());
-			if(!a.contains(parts[1])) a.add(parts[1]);
-			if(!b.contains(parts[0])) b.add(parts[0]);
+			if (!a.contains(parts[1])) a.add(parts[1]);
+			if (!b.contains(parts[0])) b.add(parts[0]);
 		}
 		
-		Utils.printf("Day 12\n");
-		Utils.printf("PartOne: %d\n", partOne(routes));
-		Utils.printf("PartTwo: %d\n", partTwo(routes));
+		Utils.startPrintf(toString());
+		Utils.printf("PartOne: %s\n", partOne(routes));
+		Utils.printf("PartTwo: %s\n", partTwo(routes));
 	}
 	
-	private static int distinctRoutes(Map<String, List<String>> routes, String path, Set<String> smallCaves, String pickedTwice, boolean hasTwo) {
+	private int distinctRoutes(Map<String, List<String>> routes, String path, Set<String> smallCaves, String pickedTwice, boolean hasTwo) {
 		int paths = 0;
 		
-		for(String option : routes.get(path)) {
+		for (String option : routes.get(path)) {
 			// If we reached the end we continue.
-			if(option.equals("end")) {
+			if (option.equals("end")) {
 				paths++;
 				continue;
-			} else if(option.equals("start")) {
+			} else if (option.equals("start")) {
 				continue;
 			}
 			
-			if(option.toLowerCase().equals(option)) {
-				if(smallCaves.contains(option)) {
+			if (option.toLowerCase().equals(option)) {
+				if (smallCaves.contains(option)) {
 					// We have already found this
-					if(!hasTwo) {
+					if (!hasTwo) {
 						paths += distinctRoutes(routes, option, smallCaves, option, true);
 					}
 				} else {
@@ -54,12 +63,12 @@ public class Day12 {
 	}
 
 	// Solve: 17 min
-	public static long partOne(Map<String, List<String>> routes) throws Exception {
+	public long partOne(Map<String, List<String>> routes) throws Exception {
 		return distinctRoutes(routes, "start", new HashSet<>(), null, true);
 	}
 	
 	// Solve: 47 min
-	public static long partTwo(Map<String, List<String>> routes) throws Exception {
+	public long partTwo(Map<String, List<String>> routes) throws Exception {
 		return distinctRoutes(routes, "start", new HashSet<>(), null, false);
 	}
 }

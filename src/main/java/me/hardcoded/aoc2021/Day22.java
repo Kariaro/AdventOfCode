@@ -2,9 +2,27 @@ package me.hardcoded.aoc2021;
 
 import java.util.*;
 
+import me.hardcoded.util.DayBase;
 import me.hardcoded.util.Utils;
 
-public class Day22 {
+public class Day22 extends DayBase {
+	public static void main(String[] args) throws Exception {
+		new Day22().run();
+	}
+	
+	public Day22() {
+		super(2021, 22);
+	}
+	
+	public void run() throws Exception {
+		List<String> lines = Utils.readAllLines(this);
+		List<Cuboid> ranges = lines.stream().map(Cuboid::new).toList();
+		
+		Utils.startPrintf(toString());
+		Utils.printf("PartOne: %s\n", partOne(ranges));
+		Utils.printf("PartTwo: %s\n", partTwo(ranges));
+	}
+	
 	private static final int MODE_ADD = 0;
 	private static final int MODE_SUB = 1;
 	
@@ -54,7 +72,7 @@ public class Day22 {
 			y_set = new TreeSet<>();
 			z_set = new TreeSet<>();
 			
-			for(Cuboid cuboid : shapes) {
+			for (Cuboid cuboid : shapes) {
 				x_set.add(cuboid.minX);
 				x_set.add(cuboid.maxX);
 				y_set.add(cuboid.minY);
@@ -71,8 +89,8 @@ public class Day22 {
 		}
 		
 		private int findIndex(int[] array, int start, int value) {
-			for(int i = start; i < array.length; i++) {
-				if(array[i] == value) return i;
+			for (int i = start; i < array.length; i++) {
+				if (array[i] == value) return i;
 			}
 			
 			return array.length - 1;
@@ -87,9 +105,9 @@ public class Day22 {
 			int z_s = findIndex(z_array, 0, shape.minZ);
 			int z_e = findIndex(z_array, z_s, shape.maxZ);
 			
-			for(int x = x_s; x < x_e; x++) {
-				for(int y = y_s; y < y_e; y++) {
-					for(int z = z_s; z < z_e; z++) {
+			for (int x = x_s; x < x_e; x++) {
+				for (int y = y_s; y < y_e; y++) {
+					for (int z = z_s; z < z_e; z++) {
 						fields[x][y][z] = value;
 					}
 				}
@@ -106,10 +124,10 @@ public class Day22 {
 		
 		public long volume() {
 			long totalVolume = 0;
-			for(int x = 0; x < x_array.length - 1; x++) {
-				for(int y = 0; y < y_array.length - 1; y++) {
-					for(int z = 0; z < z_array.length - 1; z++) {
-						if(fields[x][y][z]) {
+			for (int x = 0; x < x_array.length - 1; x++) {
+				for (int y = 0; y < y_array.length - 1; y++) {
+					for (int z = 0; z < z_array.length - 1; z++) {
+						if (fields[x][y][z]) {
 							long xx = x_array[x + 1] - x_array[x];
 							long yy = y_array[y + 1] - y_array[y];
 							long zz = z_array[z + 1] - z_array[z];
@@ -123,23 +141,14 @@ public class Day22 {
 		}
 	}
 	
-	public static void main(String[] args) throws Exception {
-		List<String> lines = Utils.readAllLines(2021, "day22");
-		List<Cuboid> ranges = lines.stream().map(Cuboid::new).toList();
-		
-		Utils.printf("Day 22\n");
-		Utils.printf("PartOne: %d\n", partOne(ranges));
-		Utils.printf("PartTwo: %d\n", partTwo(ranges));
-	}
-	
 	// Solve: 101 min
-	public static long partOne(List<Cuboid> ranges) throws Exception {
+	public long partOne(List<Cuboid> ranges) throws Exception {
 		CuboidMesh mesh = new CuboidMesh(ranges.stream().filter(i -> i.init).toList());
 		
-		for(Cuboid box : ranges) {
-			if(!box.init) continue;
+		for (Cuboid box : ranges) {
+			if (!box.init) continue;
 			
-			if(box.mode == MODE_ADD) {
+			if (box.mode == MODE_ADD) {
 				mesh.add(box);
 			} else {
 				mesh.sub(box);
@@ -150,11 +159,11 @@ public class Day22 {
 	}
 	
 	// Solve: 7 min
-	public static long partTwo(List<Cuboid> ranges) throws Exception {
+	public long partTwo(List<Cuboid> ranges) throws Exception {
 		CuboidMesh mesh = new CuboidMesh(ranges);
 		
-		for(Cuboid box : ranges) {
-			if(box.mode == MODE_ADD) {
+		for (Cuboid box : ranges) {
+			if (box.mode == MODE_ADD) {
 				mesh.add(box);
 			} else {
 				mesh.sub(box);

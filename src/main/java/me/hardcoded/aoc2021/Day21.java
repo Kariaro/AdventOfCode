@@ -2,15 +2,24 @@ package me.hardcoded.aoc2021;
 
 import java.util.*;
 
+import me.hardcoded.util.DayBase;
 import me.hardcoded.util.Utils;
 
-public class Day21 {
+public class Day21 extends DayBase {
 	public static void main(String[] args) throws Exception {
-		List<String> lines = Utils.readAllLines(2021, "day21");
+		new Day21().run();
+	}
+	
+	public Day21() {
+		super(2021, 21);
+	}
+	
+	public void run() throws Exception {
+		List<String> lines = Utils.readAllLines(this);
 		
-		Utils.printf("Day 21\n");
-		Utils.printf("PartOne: %d\n", partOne(lines));
-		Utils.printf("PartTwo: %d\n", partTwo(lines));
+		Utils.startPrintf(toString());
+		Utils.printf("PartOne: %s\n", partOne(lines));
+		Utils.printf("PartTwo: %s\n", partTwo(lines));
 	}
 	
 	private static final long[] AMOUNT = { 1, 3, 6, 7, 6, 3, 1 };
@@ -21,7 +30,7 @@ public class Day21 {
 	private static final int DIMENSION = SCORE_LENGTH * PLAYER_LENGTH;
 	
 	// Solve: 17 min
-	public static long partOne(List<String> lines) throws Exception {
+	public long partOne(List<String> lines) throws Exception {
 		int player1 = Integer.parseInt(lines.get(0).substring(28));
 		int player2 = Integer.parseInt(lines.get(1).substring(28));
 		
@@ -30,23 +39,23 @@ public class Day21 {
 		int die = 1;
 		int dies = 0;
 		
-		while(true) {
+		while (true) {
 			dies = 3 + ((die - 1) % 100) + (die % 100) + ((die + 1) % 100);
 			die += 3;
 			score1 += (((player1 += dies) - 1) % 10) + 1;
-			if(score1 >= 1000) break;
+			if (score1 >= 1000) break;
 			
 			dies = 3 + ((die - 1) % 100) + (die % 100) + ((die + 1) % 100);
 			die += 3;
 			score2 += (((player2 += dies) - 1) % 10) + 1;
-			if(score2 >= 1000) break;
+			if (score2 >= 1000) break;
 		}
 		
 		return Math.min(score1, score2) * (die - 1);
 	}
 	
 	// Solve: 62 min
-	public static long partTwo(List<String> lines) throws Exception {
+	public long partTwo(List<String> lines) throws Exception {
 		int player1 = Integer.parseInt(lines.get(0).substring(28)) - 1;
 		int player2 = Integer.parseInt(lines.get(1).substring(28)) - 1;
 		
@@ -59,31 +68,31 @@ public class Day21 {
 		
 		boolean playerOne = true;
 		boolean moreValues = true;
-		while(moreValues) {
+		while (moreValues) {
 			long[][] next = new long[DIMENSION][DIMENSION];
 			
 			// Copy all winning games
-			for(int idx1 = 0; idx1 < DIMENSION; idx1++) {
-				for(int idx2 = 0; idx2 < DIMENSION; idx2++) {
+			for (int idx1 = 0; idx1 < DIMENSION; idx1++) {
+				for (int idx2 = 0; idx2 < DIMENSION; idx2++) {
 					int score1 = idx1 / 10;
 					int score2 = idx2 / 10;
 					
 					// Get the universes with these scores
-					if(score1 >= SCORE_SEARCH || score2 >= SCORE_SEARCH) {
+					if (score1 >= SCORE_SEARCH || score2 >= SCORE_SEARCH) {
 						next[idx1][idx2] += states[idx1][idx2];
 					}
 				}
 			}
 			
-			if(playerOne) {
-				for(int idx1 = 0; idx1 < PLAYABLED; idx1++) {
+			if (playerOne) {
+				for (int idx1 = 0; idx1 < PLAYABLED; idx1++) {
 					int score1 = idx1 / 10;
-					for(int idx2 = 0; idx2 < PLAYABLED; idx2++) {
+					for (int idx2 = 0; idx2 < PLAYABLED; idx2++) {
 						// Get the universes with these scores
 						long universes = states[idx1][idx2];
 						
-						if(universes > 0) {
-							for(int i = 0; i < 7; i++) {
+						if (universes > 0) {
+							for (int i = 0; i < 7; i++) {
 								// Calculate the next player 1 position from the values
 								// And calculate the next score value for the player and
 								// Add the amount of universes times the amount that universe occurs
@@ -95,14 +104,14 @@ public class Day21 {
 					}
 				}
 			} else {
-				for(int idx2 = 0; idx2 < PLAYABLED; idx2++) {
+				for (int idx2 = 0; idx2 < PLAYABLED; idx2++) {
 					int score2 = idx2 / 10;
-					for(int idx1 = 0; idx1 < PLAYABLED; idx1++) {
+					for (int idx1 = 0; idx1 < PLAYABLED; idx1++) {
 						// Get the universes with these scores
 						long universes = states[idx1][idx2];
 						
-						if(universes > 0) {
-							for(int i = 0; i < 7; i++) {
+						if (universes > 0) {
+							for (int i = 0; i < 7; i++) {
 								int nextPlayer2 = (int)((idx2 + i + 3) % 10);
 								int nextScore2 = score2 + nextPlayer2 + 1;
 								next[idx1][nextPlayer2 + nextScore2 * PLAYER_LENGTH] += universes * AMOUNT[i];
@@ -113,7 +122,7 @@ public class Day21 {
 			}
 			
 			// Update parent states
-			for(int i = 0; i < next.length; i++) {
+			for (int i = 0; i < next.length; i++) {
 				states[i] = next[i];
 			}
 			
@@ -122,9 +131,9 @@ public class Day21 {
 				
 				// Check if we have any more values
 				beginLoop:
-				for(int idx1 = 0; idx1 < PLAYABLED; idx1++) {
-					for(int idx2 = 0; idx2 < PLAYABLED; idx2++) {
-						if(states[idx1][idx2] > 0) {
+				for (int idx1 = 0; idx1 < PLAYABLED; idx1++) {
+					for (int idx2 = 0; idx2 < PLAYABLED; idx2++) {
+						if (states[idx1][idx2] > 0) {
 							moreValues = true;
 							break beginLoop;
 						}
@@ -140,19 +149,19 @@ public class Day21 {
 		long playerWins1 = 0;
 		long playerWins2 = 0;
 		
-		for(int idx1 = 0; idx1 < DIMENSION; idx1++) {
-			for(int idx2 = 0; idx2 < DIMENSION; idx2++) {
+		for (int idx1 = 0; idx1 < DIMENSION; idx1++) {
+			for (int idx2 = 0; idx2 < DIMENSION; idx2++) {
 				int score1 = idx1 / 10;
 				int score2 = idx2 / 10;
 				
 				long universes = states[idx1][idx2];
 				
 				// Get the universes with these scores
-				if(score1 >= SCORE_SEARCH) {
+				if (score1 >= SCORE_SEARCH) {
 					playerWins1 += universes;
 				}
 				
-				if(score2 >= SCORE_SEARCH) {
+				if (score2 >= SCORE_SEARCH) {
 					playerWins2 += universes;
 				}
 			}

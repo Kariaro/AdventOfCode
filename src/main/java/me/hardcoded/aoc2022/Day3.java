@@ -1,5 +1,6 @@
 package me.hardcoded.aoc2022;
 
+import me.hardcoded.util.DayBase;
 import me.hardcoded.util.Utils;
 
 import java.util.HashSet;
@@ -7,15 +8,23 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-public class Day3 {
+public class Day3 extends DayBase {
 	public static void main(String[] args) throws Exception {
-		List<String> lines = Utils.readAllLines(2022, "day3");
-		Utils.printf("Day 1\n");
-		Utils.printf("PartOne: %d\n", partOne(lines));
-		Utils.printf("PartTwo: %d\n", partTwo(lines));
+		new Day3().run();
 	}
 	
-	private static int getPriority(char c) {
+	public Day3() {
+		super(2022, 3);
+	}
+	
+	public void run() throws Exception {
+		List<String> lines = Utils.readAllLines(this);
+		Utils.startPrintf(toString());
+		Utils.printf("PartOne: %s\n", partOne(lines));
+		Utils.printf("PartTwo: %s\n", partTwo(lines));
+	}
+	
+	private int getPriority(char c) {
 		if (c >= 'A' && c <= 'Z') {
 			return 27 + (c - 'A');
 		}
@@ -24,7 +33,7 @@ public class Day3 {
 	}
 	
 	// Solve: 10 min
-	public static int partOne(List<String> lines) throws Exception {
+	public int partOne(List<String> lines) throws Exception {
 		// item type is the first char of the line
 		
 		int result = 0;
@@ -56,7 +65,7 @@ public class Day3 {
 	}
 	
 	// Solve: 4 min
-	public static int partTwo(List<String> lines) throws Exception {
+	public int partTwo(List<String> lines) throws Exception {
 		String chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		
 		int result = 0;

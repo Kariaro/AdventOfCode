@@ -2,43 +2,52 @@ package me.hardcoded.aoc2021;
 
 import java.util.stream.IntStream;
 
+import me.hardcoded.util.DayBase;
 import me.hardcoded.util.Utils;
 
-public class Day7 {
+public class Day7 extends DayBase {
 	public static void main(String[] args) throws Exception {
-		int[] array = Utils.readIntArray(2021, "day7", ",");
-		int max = IntStream.of(array).max().getAsInt();
-		
-		Utils.printf("Day 7\n");
-		Utils.printf("PartOne: %d\n", partOne(array, max));
-		Utils.printf("PartTwo: %d\n", partTwo(array, max));
+		new Day7().run();
 	}
 	
-	public static int partOne(int[] array, int max) throws Exception {
+	public Day7() {
+		super(2021, 7);
+	}
+	
+	public void run() throws Exception {
+		int[] array = Utils.readIntArray(this, ",");
+		int max = IntStream.of(array).max().getAsInt();
+		
+		Utils.startPrintf(toString());
+		Utils.printf("PartOne: %s\n", partOne(array, max));
+		Utils.printf("PartTwo: %s\n", partTwo(array, max));
+	}
+	
+	public int partOne(int[] array, int max) throws Exception {
 		int best_total = Integer.MAX_VALUE;
-		for(int i = 0; i <= max; i++) {
+		for (int i = 0; i <= max; i++) {
 			int total = 0;
-			for(int j : array) {
+			for (int j : array) {
 				total += Math.abs(j - i);
 			}
 
-			if(total > best_total) break;
+			if (total > best_total) break;
 			best_total = total;
 		}
 		
 		return best_total;
 	}
 	
-	public static int partTwo(int[] array, int max) throws Exception {
+	public int partTwo(int[] array, int max) throws Exception {
 		int best_total = Integer.MAX_VALUE;
-		for(int i = 0; i <= max; i++) {
+		for (int i = 0; i <= max; i++) {
 			int total = 0;
-			for(int j : array) {
+			for (int j : array) {
 				int n = Math.abs(j - i);
 				total += (n * n + n) / 2;
 			}
 			
-			if(total > best_total) break;
+			if (total > best_total) break;
 			best_total = total;
 		}
 		

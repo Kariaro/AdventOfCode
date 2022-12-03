@@ -4,33 +4,42 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import me.hardcoded.util.DayBase;
 import me.hardcoded.util.Utils;
 
-public class Day8 {
+public class Day8 extends DayBase {
 	public static void main(String[] args) throws Exception {
-		List<String> lines = Utils.readAllLines(2021, "day8");
-		
-		Utils.printf("Day 8\n");
-		Utils.printf("PartOne: %d\n", partOne(lines));
-		Utils.printf("PartTwo: %d\n", partTwo(lines));
+		new Day8().run();
 	}
 	
-	public static Set<Character> toSet(String string) {
+	public Day8() {
+		super(2021, 8);
+	}
+	
+	public void run() throws Exception {
+		List<String> lines = Utils.readAllLines(this);
+		
+		Utils.startPrintf(toString());
+		Utils.printf("PartOne: %s\n", partOne(lines));
+		Utils.printf("PartTwo: %s\n", partTwo(lines));
+	}
+	
+	public Set<Character> toSet(String string) {
 		return string.chars().mapToObj(i -> (Character)(char)i).collect(Collectors.toSet());
 	}
 	
-	public static String getMatch(List<String> list, String digits) {
+	public String getMatch(List<String> list, String digits) {
 		Set<Character> digitSet = toSet(digits);
 		return list.stream().filter(s -> toSet(s).containsAll(digitSet)).findFirst().orElse(null);
 	}
 	
-	public static String getMatch(List<String> list, String a, String b) {
+	public String getMatch(List<String> list, String a, String b) {
 		Set<Character> digitSet = new HashSet<>(toSet(a));
 		digitSet.removeAll(toSet(b));
 		return list.stream().filter(s -> toSet(s).containsAll(digitSet)).findFirst().orElse(null);
 	}
 	
-	public static List<Set<Character>> figureOutMapping(String[] array) {
+	public List<Set<Character>> figureOutMapping(String[] array) {
 		List<String> list = new ArrayList<>(Arrays.asList(array));
 		
 		String zero, two, three, five, six, nine;
@@ -39,9 +48,9 @@ public class Day8 {
 		String seven = null;
 		String eight = null;
 		
-		for(String str : list) {
+		for (String str : list) {
 			int len = str.length();
-			switch(len) {
+			switch (len) {
 				case 2 -> one = str;
 				case 3 -> seven = str;
 				case 4 -> four = str;
@@ -73,25 +82,25 @@ public class Day8 {
 		// Last element is Two
 		two = list.get(0);
 		
-		return List.of(zero, one, two, three, four, five, six, seven, eight, nine).stream().map(Day8::toSet).toList();
+		return List.of(zero, one, two, three, four, five, six, seven, eight, nine).stream().map(this::toSet).toList();
 	}
 	
-	public static int partOne(List<String> lines) throws Exception {
+	public int partOne(List<String> lines) throws Exception {
 		Set<Integer> match = Set.of(2, 3, 4, 7);
-		return (int)lines.stream().flatMap(s -> Stream.of(s.split(" \\| ")[1].split(" "))).filter(s -> match.contains(s.length())).count();
+		return (int) lines.stream().flatMap(s -> Stream.of(s.split(" \\| ")[1].split(" "))).filter(s -> match.contains(s.length())).count();
 	}
 	
-	public static int partTwo(List<String> lines) throws Exception {
+	public int partTwo(List<String> lines) throws Exception {
 		int total = 0;
-		for(String line : lines) {
+		for (String line : lines) {
 			String[] parts = line.split(" \\| ");
 			List<Set<Character>> map = figureOutMapping(parts[0].split(" "));
 			
 			int result = 0;
-			for(String str : parts[1].split(" ")) {
+			for (String str : parts[1].split(" ")) {
 				Set<Character> strSet = toSet(str);
-				for(int i = 0; i < 10; i++) {
-					if(map.get(i).equals(strSet)) {
+				for (int i = 0; i < 10; i++) {
+					if (map.get(i).equals(strSet)) {
 						result = result * 10 + i;
 						break;
 					}

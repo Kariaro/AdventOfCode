@@ -2,9 +2,26 @@ package me.hardcoded.aoc2021;
 
 import java.util.*;
 
+import me.hardcoded.util.DayBase;
 import me.hardcoded.util.Utils;
 
-public class Day23 {
+public class Day23 extends DayBase {
+	public static void main(String[] args) throws Exception {
+		new Day23().run();
+	}
+	
+	public Day23() {
+		super(2021, 23);
+	}
+	
+	public void run() throws Exception {
+		List<String> lines = Utils.readAllLines(this);
+		
+		Utils.startPrintf(toString());
+		Utils.printf("PartOne: %s\n", partOne(lines));
+		Utils.printf("PartTwo: %s\n", partTwo(lines));
+	}
+	
 	private static final Map<Character, Long> ENERGY = Map.of('A', 1L, 'B', 10L, 'C', 100L, 'D', 1000L);
 	private static final Map<Character, Integer> TARGET = Map.of('A', 2, 'B', 4, 'C', 6, 'D', 8);
 	private static final int MAX_DEPTH = 100;
@@ -39,11 +56,11 @@ public class Day23 {
 			this.width = input.get(0).length() - 2;
 			this.map = new char[width * height];
 			
-			for(int y = 0; y < height; y++) {
+			for (int y = 0; y < height; y++) {
 				String str = input.get(y + 1);
-				for(int x = 0; x < width; x++) {
+				for (int x = 0; x < width; x++) {
 					char c = x + 2 > str.length() ? ' ':str.charAt(x + 1);
-					if(c == '#') c = ' ';
+					if (c == '#') c = ' ';
 					map[x + y * width] = c;
 				}
 			}
@@ -58,11 +75,11 @@ public class Day23 {
 		}
 		
 		boolean isSolved() {
-			for(int i = 0; i < height - 1; i++) {
-				for(int x = 0; x < 4; x++) {
+			for (int i = 0; i < height - 1; i++) {
+				for (int x = 0; x < 4; x++) {
 					int target = 'A' + x;
 					int xp = 2 + x * 2;
-					if(map[xp + width * (i + 1)] != target) {
+					if (map[xp + width * (i + 1)] != target) {
 						return false;
 					}
 				}
@@ -81,26 +98,26 @@ public class Day23 {
 
 			int target = TARGET.get(piece);
 			
-			if(y > 0) {
-				if(x == target) {
+			if (y > 0) {
+				if (x == target) {
 					boolean canStay = true;
 					
 					// We are already in our target area
-					for(int i = y; i < height; i++) {
+					for (int i = y; i < height; i++) {
 						// We check from the bottom that they are the correct value
-						if(map[x + i * width] != piece) {
+						if (map[x + i * width] != piece) {
 							canStay = false;
 							break;
 						}
 					}
 					
-					if(canStay) {
+					if (canStay) {
 						return List.of();
 					}
 				}
 				
-				for(int i = y - 1; i >= 1; i--) {
-					if(map[x + i * width] != '.') {
+				for (int i = y - 1; i >= 1; i--) {
+					if (map[x + i * width] != '.') {
 						// We are blocked at some point and cannot continue
 						return List.of();
 					}
@@ -119,13 +136,13 @@ public class Day23 {
 				long energy = ENERGY.get(piece);
 				
 				// We will first check left
-				for(int i = x - 1, s = start; i >= 0; i--, s++) {
+				for (int i = x - 1, s = start; i >= 0; i--, s++) {
 					char p = map[i];
 					// If there are any point here that blocks we cannot go there
-					if(p != '.') break;
+					if (p != '.') break;
 					
 					// If the point is not in the room area we can add it
-					if((i & 1) == 1 || i == 0) {
+					if ((i & 1) == 1 || i == 0) {
 						// How many squares did we move?
 						// We went up one and then
 						moves.add(new Move(idx, i, energy * s));
@@ -133,13 +150,13 @@ public class Day23 {
 				}
 				
 				// Then we check right
-				for(int i = x + 1, s = start; i < width; i++, s++) {
+				for (int i = x + 1, s = start; i < width; i++, s++) {
 					char p = map[i];
 					// If there are any point here that blocks we cannot go there
-					if(p != '.') break;
+					if (p != '.') break;
 					
 					// If the point is not in the room area we can add it
-					if((i & 1) == 1 || i == width - 1) {
+					if ((i & 1) == 1 || i == width - 1) {
 						// How many squares did we move?
 						// We went up one and then
 						moves.add(new Move(idx, i, energy * s));
@@ -157,22 +174,22 @@ public class Day23 {
 			// We can only enter our own stall
 			
 			// We will first check left
-			for(int i = x - 1, s = 2; i >= 0; i--, s++) {
+			for (int i = x - 1, s = 2; i >= 0; i--, s++) {
 				char p = map[i];
 				// If there are any point here that blocks we cannot go there
-				if(p != '.') break;
+				if (p != '.') break;
 				
 				// If the point is not in the room area we can add it
-				if(i == target) {
+				if (i == target) {
 					// Check if we can enter this place
 					
-					for(int j = height - 1; j >= 1; j--) {
+					for (int j = height - 1; j >= 1; j--) {
 						char block = map[i + j * width];
-						if(block == '.') {
+						if (block == '.') {
 							// We have not seen an invalid shape and this is the first empty
 							// place. We can more here
 							moves.add(new Move(idx, i + width * j, energy * (s + j - 1)));
-						} else if(block != piece) {
+						} else if (block != piece) {
 							// We saw an invalid shape and we cannot move here anymore
 							break;
 						}
@@ -181,21 +198,21 @@ public class Day23 {
 			}
 			
 			// Then we check right
-			for(int i = x + 1, s = 2; i < width; i++, s++) {
+			for (int i = x + 1, s = 2; i < width; i++, s++) {
 				char p = map[i];
 				// If there are any point here that blocks we cannot go there
-				if(p != '.') break;
+				if (p != '.') break;
 				
 				// If the point is not in the room area we can add it
-				if(i == target) {
+				if (i == target) {
 					// Check if we can enter this place
-					for(int j = height - 1; j >= 1; j--) {
+					for (int j = height - 1; j >= 1; j--) {
 						char block = map[i + j * width];
-						if(block == '.') {
+						if (block == '.') {
 							// We have not seen an invalid shape and this is the first empty
 							// place. We can more here
 							moves.add(new Move(idx, i + width * j, energy * (s + j - 1)));
-						} else if(block != piece) {
+						} else if (block != piece) {
 							// We saw an invalid shape and we cannot move here anymore
 							break;
 						}
@@ -210,11 +227,11 @@ public class Day23 {
 			List<Move> result = new ArrayList<>();
 			
 			// Do not do moves for pieces that are on the correct squares
-			for(int y = 0; y < height; y++) {
-				for(int x = 0; x < width; x++) {
+			for (int y = 0; y < height; y++) {
+				for (int x = 0; x < width; x++) {
 					char piece = map[x + y * width];
 					
-					if(piece != '.' && piece != ' ') {
+					if (piece != '.' && piece != ' ') {
 						result.addAll(getMoves(x, y));
 					}
 				}
@@ -236,11 +253,11 @@ public class Day23 {
 		}
 		
 		long smallestEnergy(int depth, long smallest) {
-			if(depth < 0) return smallest;
+			if (depth < 0) return smallest;
 			
-			for(Move move : getMoves()) {
+			for (Move move : getMoves()) {
 				// If the computed hall energy is more than the smallest we skip it
-				if(energy + move.energy > smallest) {
+				if (energy + move.energy > smallest) {
 					continue;
 				}
 				
@@ -248,7 +265,7 @@ public class Day23 {
 				
 				String hash = hall.board();
 				long bestEnergy = SEEN.computeIfAbsent(hash, v -> Long.MAX_VALUE);
-				if(bestEnergy > hall.energy) {
+				if (bestEnergy > hall.energy) {
 					// If we have reached this state and that state had a longer path
 					// then we want to recompute it to get the smallest path possible
 					SEEN.put(hash, hall.energy);
@@ -258,8 +275,8 @@ public class Day23 {
 				}
 				
 				// Check if we solved the sorting
-				if(hall.isSolved()) {
-					if(hall.energy < smallest) {
+				if (hall.isSolved()) {
+					if (hall.energy < smallest) {
 						System.out.printf("depth: %d, small=%d\n", MAX_DEPTH - depth, hall.energy);
 					}
 					smallest = Math.min(hall.energy, smallest);
@@ -273,22 +290,14 @@ public class Day23 {
 		}
 	}
 	
-	public static void main(String[] args) throws Exception {
-		List<String> lines = Utils.readAllLines(2021, "day23");
-		
-		Utils.printf("Day 23\n");
-		Utils.printf("PartOne: %d\n", partOne(lines));
-		Utils.printf("PartTwo: %d\n", partTwo(lines));
-	}
-	
 	// Solve: 86 min
-	public static long partOne(List<String> lines) throws Exception {
+	public long partOne(List<String> lines) throws Exception {
 		Hallway hall = new Hallway(lines);
 		return hall.smallestEnergy(MAX_DEPTH);
 	}
 	
 	// Solve: 27 min
-	public static long partTwo(List<String> lines) throws Exception {
+	public long partTwo(List<String> lines) throws Exception {
 		lines.add(3, "  #D#C#B#A#");
 		lines.add(4, "  #D#B#A#C#");
 		

@@ -1,5 +1,6 @@
 package me.hardcoded.aoc2022;
 
+import me.hardcoded.util.DayBase;
 import me.hardcoded.util.Utils;
 
 import java.util.ArrayList;
@@ -8,20 +9,28 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.IntStream;
 
-public class Day1 {
+public class Day1 extends DayBase {
 	public static void main(String[] args) throws Exception {
-		int[][] array = Arrays.stream(Utils.readAll(2022, "day1").trim().split("\r\n\r\n"))
+		new Day1().run();
+	}
+	
+	public Day1() {
+		super(2022, 1);
+	}
+	
+	public void run() throws Exception {
+		int[][] array = Arrays.stream(Utils.readAll(this).trim().split("\r\n\r\n"))
 			.map(data -> data.trim().lines()
-			.mapToInt(Integer::parseInt).toArray())
+				.mapToInt(Integer::parseInt).toArray())
 			.toArray(int[][]::new);
 		
-		Utils.printf("Day 1\n");
-		Utils.printf("PartOne: %d\n", partOne(array));
-		Utils.printf("PartTwo: %d\n", partTwo(array));
+		Utils.startPrintf(toString());
+		Utils.printf("PartOne: %s\n", partOne(array));
+		Utils.printf("PartTwo: %s\n", partTwo(array));
 	}
 	
 	// Solve: 15 min
-	public static int partOne(int[][] array) throws Exception {
+	public int partOne(int[][] array) throws Exception {
 		int highest = 0;
 		for (int[] ints : array) {
 			highest = Math.max(highest, IntStream.of(ints).sum());
@@ -31,7 +40,7 @@ public class Day1 {
 	}
 	
 	// Solve: 1 min
-	public static int partTwo(int[][] array) throws Exception {
+	public int partTwo(int[][] array) throws Exception {
 		List<Integer> values = new ArrayList<>();
 		for (int[] ints : array) {
 			values.add(IntStream.of(ints).sum());

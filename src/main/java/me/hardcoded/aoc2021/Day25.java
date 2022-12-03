@@ -2,9 +2,28 @@ package me.hardcoded.aoc2021;
 
 import java.util.*;
 
+import me.hardcoded.util.DayBase;
 import me.hardcoded.util.Utils;
 
-public class Day25 {
+public class Day25 extends DayBase {
+	public static void main(String[] args) throws Exception {
+		new Day25();
+	}
+	
+	public Day25() {
+		super(2021, 25);
+	}
+	
+	public void run() throws Exception {
+		List<String> lines = Utils.readAllLines(this);
+		
+		Floor floor = new Floor(lines);
+		
+		Utils.startPrintf(toString());
+		Utils.printf("PartOne: %s\n", partOne(floor));
+		Utils.printf("PartTwo: %s\n", partTwo(lines));
+	}
+	
 	private static final int EAST  = 1;
 	private static final int SOUTH = 2;
 	
@@ -18,12 +37,12 @@ public class Day25 {
 			this.height = lines.size();
 			this.map = new int[width * height];
 			
-			for(int y = 0; y < lines.size(); y++) {
+			for (int y = 0; y < lines.size(); y++) {
 				String line = lines.get(y);
 				
-				for(int x = 0; x < line.length(); x++) {
+				for (int x = 0; x < line.length(); x++) {
 					int idx = x + y * width;
-					map[idx] = switch(line.charAt(x)) {
+					map[idx] = switch (line.charAt(x)) {
 						case '>' -> EAST;
 						case 'v' -> SOUTH;
 						default -> 0;
@@ -35,20 +54,20 @@ public class Day25 {
 		boolean step() {
 			boolean moved = false;
 			// We move from bottom to top. left to right
-			for(int y = 0; y < height; y++) {
+			for (int y = 0; y < height; y++) {
 				boolean movedFirst = false;
-				for(int x = 0; x < width; x++) {
-					if(x == width - 1 && movedFirst) break;
+				for (int x = 0; x < width; x++) {
+					if (x == width - 1 && movedFirst) break;
 					
 					int thisIdx = x + y * width;
 					int pickle = map[thisIdx];
 					
-					if(pickle == EAST) {
+					if (pickle == EAST) {
 						int nextIdx = ((x + 1) % width) + y * width;
 						int nextBlc = map[nextIdx];
 						
-						if(nextBlc == 0) {
-							if(x == 0) movedFirst = true;
+						if (nextBlc == 0) {
+							if (x == 0) movedFirst = true;
 							
 							// We can move
 							map[thisIdx] = 0;
@@ -61,20 +80,20 @@ public class Day25 {
 				}
 			}
 			
-			for(int x = 0; x < width; x++) {
+			for (int x = 0; x < width; x++) {
 				boolean movedFirst = false;
-				for(int y = 0; y < height; y++) {
-					if(y == height - 1 && movedFirst) break;
+				for (int y = 0; y < height; y++) {
+					if (y == height - 1 && movedFirst) break;
 					
 					int thisIdx = x + y * width;
 					int pickle = map[thisIdx];
 					
-					if(pickle == SOUTH) {
+					if (pickle == SOUTH) {
 						int nextIdx = x + (((y + 1) % height)) * width;
 						int nextBlc = map[nextIdx];
 						
-						if(nextBlc == 0) {
-							if(y == 0) movedFirst = true;
+						if (nextBlc == 0) {
+							if (y == 0) movedFirst = true;
 							
 							// We can move
 							map[thisIdx] = 0;
@@ -92,10 +111,10 @@ public class Day25 {
 		
 		void print() {
 			StringBuilder sb = new StringBuilder();
-			for(int y = 0; y < map.length; y += width) {
-				for(int x = 0; x < width; x++) {
+			for (int y = 0; y < map.length; y += width) {
+				for (int x = 0; x < width; x++) {
 					int pickle = map[x + y];
-					sb.append(switch(pickle) {
+					sb.append(switch (pickle) {
 						case SOUTH -> 'v';
 						case EAST -> '>';
 						default -> '.';
@@ -107,27 +126,17 @@ public class Day25 {
 		}
 	}
 	
-	public static void main(String[] args) throws Exception {
-		List<String> lines = Utils.readAllLines(2021, "day25");
-		
-		Floor floor = new Floor(lines);
-		
-		Utils.printf("Day 25\n");
-		Utils.printf("PartOne: %d\n", partOne(floor));
-		Utils.printf("PartTwo: %d\n", partTwo(lines));
-	}
-	
 	// Start: 11:53
 	// End: 12:20
-	public static long partOne(Floor floor) throws Exception {
+	public long partOne(Floor floor) throws Exception {
 		floor.print();
 		int index = 1;
-//		for(int i = 0; i < 58; i++) {
+//		for (int i = 0; i < 58; i++) {
 //			System.out.printf("After %d steps:\n", i + 1);
 //			floor.step();
 //			floor.print();
 //		}
-		while(floor.step()) {
+		while (floor.step()) {
 			System.out.printf("After %d steps:\n", index);
 			index++;
 //			floor.print();
@@ -136,10 +145,10 @@ public class Day25 {
 		floor.print();
 		System.out.println(index);
 		
-		return 0;
+		return index;
 	}
 	
-	public static long partTwo(List<String> lines) throws Exception {
+	public long partTwo(List<String> lines) throws Exception {
 		return 0;
 	}
 }

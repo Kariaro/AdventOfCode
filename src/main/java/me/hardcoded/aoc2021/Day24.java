@@ -2,9 +2,27 @@ package me.hardcoded.aoc2021;
 
 import java.util.*;
 
+import me.hardcoded.util.DayBase;
 import me.hardcoded.util.Utils;
 
-public class Day24 {
+public class Day24 extends DayBase {
+	public static void main(String[] args) throws Exception {
+		new Day24().run();
+	}
+	
+	public Day24() {
+		super(2021, 24);
+	}
+	
+	public void run() throws Exception {
+		List<String> lines = Utils.readAllLines(this);
+		List<Inst> insts = lines.stream().map(Inst::new).toList();
+		
+		Utils.startPrintf(toString());
+		Utils.printf("PartOne: %s\n", partOne(insts));
+		Utils.printf("PartTwo: %s\n", partTwo(insts));
+	}
+	
 	enum Type {
 		INP,
 		ADD,
@@ -34,9 +52,9 @@ public class Day24 {
 		
 		Param(String value) {
 			this.regIdx = -1;
-			if(value.length() == 1) {
+			if (value.length() == 1) {
 				char c = value.charAt(0);
-				if(Character.isDigit(c)) {
+				if (Character.isDigit(c)) {
 					this.num = c - '0';
 					return;
 				}
@@ -67,7 +85,7 @@ public class Day24 {
 		long resolve(long[] memory, int idx) {
 			Param param = values.get(idx);
 			
-			if(param.isReg()) {
+			if (param.isReg()) {
 				return memory[param.regIdx];
 			}
 			
@@ -77,7 +95,7 @@ public class Day24 {
 		void run(long[] memory, Input input) {
 			int idx = values.get(0).regIdx;
 			
-			switch(type) {
+			switch (type) {
 				case INP -> memory[idx] = input.read();
 				case ADD -> memory[idx] += resolve(memory, 1);
 				case MUL -> memory[idx] *= resolve(memory, 1);
@@ -96,12 +114,12 @@ public class Day24 {
 			List<long[]> next = new ArrayList<>();
 			
 			List<long[]> resolve = new ArrayList<>(outputs);
-			if(resolve.isEmpty()) {
+			if (resolve.isEmpty()) {
 				resolve.add(new long[4]);
 			}
 			
-			for(long[] test : resolve) {
-				for(int i = 0; i < 9; i++) {
+			for (long[] test : resolve) {
+				for (int i = 0; i < 9; i++) {
 					long[] mem = test.clone();
 					
 					String val = "%d".formatted(i + 1);
@@ -173,7 +191,7 @@ public class Day24 {
 			
 			// Find the equation for (z % 26) == (w - B)
 			
-			if((z % 26) == w - B) {
+			if ((z % 26) == w - B) {
 				z = (z / A) * C;
 			} else {
 				z = (z / A) * (25 + C) + (w + D);
@@ -195,13 +213,13 @@ public class Day24 {
 			System.out.println("bA: " + bA);
 
 			// We need to go from 0 to 25
-			for(int i = -26; i < 26 * A; i++) {
+			for (int i = -26; i < 26 * A; i++) {
 				long t = bA + i;
 				long d = (t / A);
 				System.out.println("t: " + t + ", d: " + D);
 				
-				if(d > za) break;
-				if((d == za) && ((t % 26) + B != w)) {
+				if (d > za) break;
+				if ((d == za) && ((t % 26) + B != w)) {
 					list.add(t);
 				}
 			}
@@ -217,12 +235,12 @@ public class Day24 {
 			long bA = za * A;
 
 			// We need to go from 0 to 25
-			for(int i = -26; i < 26 * A; i++) {
+			for (int i = -26; i < 26 * A; i++) {
 				long t = bA + i;
 				long d = (t / A);
 				
-				if(d > za) break;
-				if((d == za) && ((t % 26) + B != w)) {
+				if (d > za) break;
+				if ((d == za) && ((t % 26) + B != w)) {
 					list.add(t);
 				}
 			}
@@ -234,13 +252,13 @@ public class Day24 {
 			
 			// Go trough all possible combinations of z
 			long bA = za * A;
-			for(int i = -26; i < 26 * A; i++) {
+			for (int i = -26; i < 26 * A; i++) {
 				long t = bA + i;
 				long d = (t / A);
 				
-				if(d > za) break;
+				if (d > za) break;
 				
-				if((d == za) && ((t % 26) + B == w)) {
+				if ((d == za) && ((t % 26) + B == w)) {
 					// We found our z
 					list.add(t);
 				}
@@ -252,7 +270,7 @@ public class Day24 {
 			// Z is whatever
 			
 			// Z is the only free variable
-//			if((z % 26) + B != w) {
+//			if ((z % 26) + B != w) {
 //				z = (z / A) * (25 + C) + (w + D);
 //			} else {
 //				z = (z / A) * C;
@@ -268,7 +286,7 @@ public class Day24 {
 				// z = (z / A) * (25 + C)
 				
 				// Then we divide
-				if(canDivide(bA, (25 + C))) {
+				if (canDivide(bA, (25 + C))) {
 					long bB = bA / (25 + C);
 					// z = (z / A)
 					branch_a = bB;
@@ -277,7 +295,7 @@ public class Day24 {
 			
 			// Try solve for branch_b
 			{
-				if(canDivide(target, C)) {
+				if (canDivide(target, C)) {
 					long bA = target / C;
 					// z = (z / A)
 					branch_b = bA;
@@ -286,7 +304,7 @@ public class Day24 {
 			
 			List<Long> result = new ArrayList<>();
 			// branch_a = (z / A)
-			if(branch_a != null) {
+			if (branch_a != null) {
 				// We need to find all inputs that equals
 				// Branch a is when ((z % 26) + B != w)
 				
@@ -294,7 +312,7 @@ public class Day24 {
 			}
 			
 			// branch_b = (z / A)
-			if(branch_b != null) {
+			if (branch_b != null) {
 				// We need to find all inputs that equals
 				// Branch a is when ((z % 26) + B != w)
 				
@@ -306,8 +324,8 @@ public class Day24 {
 		
 		List<Long> naive(long w, long target) {
 			List<Long> result = new ArrayList<>();
-			for(long i = -0x7fffff; i < 0x7fffff; i += 1L) {
-				if(run(w, i) == target) {
+			for (long i = -0x7fffff; i < 0x7fffff; i += 1L) {
+				if (run(w, i) == target) {
 					result.add((long)i);
 				}
 			}
@@ -320,31 +338,31 @@ public class Day24 {
 			Long branch_b = null;
 			
 			long bA = target - (w + D);
-			if(canDivide(bA, (25 + C))) {
+			if (canDivide(bA, (25 + C))) {
 				branch_a = bA / (25 + C);
 			}
 			
-			if(canDivide(target, C)) {
+			if (canDivide(target, C)) {
 				branch_b = target / C;
 			}
 			
-			if(branch_a != null) {
+			if (branch_a != null) {
 				find_z_1(w, branch_a, target, list);
 			}
 			
-			if(branch_b != null) {
+			if (branch_b != null) {
 				find_z_2(w, branch_b, target, list);
 			}
 			
-//			if(list.size() != 1) {
-//				for(long check : list) {
-//					if(run(w, check) != target) {
+//			if (list.size() != 1) {
+//				for (long check : list) {
+//					if (run(w, check) != target) {
 //						throw new RuntimeException();
 //					}
 //				}
 //				
 //				List<Long> ch = naive(w, target);
-//				if(list.size() != ch.size()) {
+//				if (list.size() != ch.size()) {
 //					System.out.println("w: " + w);
 //					System.out.println("t: " + target);
 //					System.out.println("a: " + branch_a);
@@ -375,20 +393,11 @@ public class Day24 {
 		}
 	}
 	
-	public static void main(String[] args) throws Exception {
-		List<String> lines = Utils.readAllLines(2021, "day24");
-		List<Inst> insts = lines.stream().map(Inst::new).toList();
-		
-		Utils.printf("Day 24\n");
-		Utils.printf("PartOne: %d\n", partOne(insts));
-		Utils.printf("PartTwo: %d\n", partTwo(insts));
-	}
-	
-	private static List<List<Inst>> split(List<Inst> insts) {
+	private List<List<Inst>> split(List<Inst> insts) {
 		List<List<Inst>> result = new ArrayList<>();
 		List<Inst> list = null;
-		for(Inst inst : insts) {
-			if(inst.type == Type.INP) {
+		for (Inst inst : insts) {
+			if (inst.type == Type.INP) {
 				list = new ArrayList<>();
 				result.add(list);
 			}
@@ -400,26 +409,26 @@ public class Day24 {
 	}
 	
 	private static long[] run(long[] mem, List<Inst> insts, Input input) {
-		for(Inst inst : insts) {
+		for (Inst inst : insts) {
 			inst.run(mem, input);
 		}
 		return mem;
 	}
 	
-//	private static Map<Character, Pair> getPairs2(Problem prog, long target, long roof) {
+//	private Map<Character, Pair> getPairs2(Problem prog, long target, long roof) {
 //		Map<Character, Pair> result = new HashMap<>();
 //		
 //		int start = (int)(Math.max(0, roof - 0x7ffff));
 //		int end = (int)(roof + 0x7ffffff);
-//		for(int j = start; j < end; j++) {
-//			for(int i = 0; i < 9; i++) {
+//		for (int j = start; j < end; j++) {
+//			for (int i = 0; i < 9; i++) {
 //				long ret = prog.test2(i + 1, j);
 //				
-//				if(ret == target) {
+//				if (ret == target) {
 //					char digit = (char)('1' + i);
 //					result.put(digit, new Pair(Character.toString(digit), j));
 //					
-//					if(result.size() == 9) {
+//					if (result.size() == 9) {
 //						return result;
 //					}
 //				}
@@ -430,8 +439,8 @@ public class Day24 {
 //	}
 	
 //	private static final char[] DIGITS = "987654321".toCharArray();
-//	private static boolean generate2(List<Problem> lines, int index, long target, LinkedList<Character> list) {
-//		if(index < 0) {
+//	private boolean generate2(List<Problem> lines, int index, long target, LinkedList<Character> list) {
+//		if (index < 0) {
 //			return true;
 //		}
 //
@@ -442,18 +451,18 @@ public class Day24 {
 //		
 //		boolean found = false;
 //		
-//		if(index < 100) {
+//		if (index < 100) {
 //			System.out.println(list);
 //		}
 //		
 //		// For each digit check the sub digits
-//		for(char digit : DIGITS) {
+//		for (char digit : DIGITS) {
 //			Pair pair = pairs.get(digit);
-//			if(pair == null) continue;
+//			if (pair == null) continue;
 //			
 //			list.addLast(digit);
 //			
-//			if(generate2(lines, index - 1, pair.value, list)) {
+//			if (generate2(lines, index - 1, pair.value, list)) {
 //				// We found the largest solution
 //				
 //				System.out.println("Found");
@@ -467,13 +476,13 @@ public class Day24 {
 //	}
 	
 	private static int lowestIndex = 100;
-	private static boolean backtrace(List<Problem> probs, int index, long target, LinkedList<Integer> stack, LinkedList<Long> test) {
-		if(index < 0) {
+	private boolean backtrace(List<Problem> probs, int index, long target, LinkedList<Integer> stack, LinkedList<Long> test) {
+		if (index < 0) {
 			return target == 0;
 		}
 		
 		test.addLast(target);
-		if(index < lowestIndex) {
+		if (index < lowestIndex) {
 			lowestIndex = index;
 			System.out.println("Lowest: " + lowestIndex);
 			System.out.println("Target: " + target);
@@ -481,7 +490,7 @@ public class Day24 {
 			System.out.println(test);
 		}
 		
-//		if(index == 0) {
+//		if (index == 0) {
 //			System.out.println(stack);
 //			System.out.println("TRG: " + target);
 //		}
@@ -491,20 +500,20 @@ public class Day24 {
 		List<Long> list = new ArrayList<>();
 		
 		// Iterrate from 9 to 1 because we want the highest
-		for(int i = 1; i < 10; i++) {
+		for (int i = 1; i < 10; i++) {
 			list.clear();
 			// Calculate what values could have given this number
 			prob.backtraceFast(i, target, list);
 			
-//			if(index == 0) {
+//			if (index == 0) {
 //				System.out.printf("%d -> %s\n", i, list);
 //			}
 			
 			stack.push(i);
 			// Check if we can use the current digit
-			for(int j = 0; j < list.size(); j++) {
+			for (int j = 0; j < list.size(); j++) {
 				long solution = list.get(j);
-				if(backtrace(probs, index - 1, solution, stack, test)) {
+				if (backtrace(probs, index - 1, solution, stack, test)) {
 					// Return from the method
 					return true;
 				} else {
@@ -524,13 +533,13 @@ public class Day24 {
 		return false;
 	}
 	
-	private static long testRun(List<Problem> list, long start, String input) {
+	private long testRun(List<Problem> list, long start, String input) {
 		final int len = input.length();
 		final int str = list.size() - input.length();
 		
 		// 11961194979999
 		long z = start;
-		for(int i = 0; i < len; i++) {
+		for (int i = 0; i < len; i++) {
 			Problem prob = list.get(str + i);
 			long w = input.charAt(i) - '0';
 			z = prob.run(w, z);
@@ -543,7 +552,7 @@ public class Day24 {
 	// Day: 1, 14:22 -> 16:38 end
 	
 	//  19:00 -> 20:24
-	public static long partOne(List<Inst> lines) throws Exception {
+	public long partOne(List<Inst> lines) throws Exception {
 		List<Problem> parts = split(lines).stream().map(Problem::new).toList();
 		
 		LinkedList<Long> targets = new LinkedList<>();
@@ -553,7 +562,7 @@ public class Day24 {
 		System.out.println(targets);
 		
 		String str = "";
-		for(int i = 0; i < stack.size(); i++) {
+		for (int i = 0; i < stack.size(); i++) {
 			str += stack.get(i);
 		}
 		
@@ -571,7 +580,7 @@ public class Day24 {
 //		generate2(parts, 13, 0, test);
 //		Problem problem = parts.get(0);
 //		long bw = 0;
-//		for(int i = 0; i < 16; i++) {
+//		for (int i = 0; i < 16; i++) {
 //			long bz = i;
 //			
 //			long ta = problem.run(bw, bz);
@@ -587,7 +596,7 @@ public class Day24 {
 	}
 	
 	// 20:47
-	public static long partTwo(List<Inst> lines) throws Exception {
+	public long partTwo(List<Inst> lines) throws Exception {
 		return 0;
 	}
 }

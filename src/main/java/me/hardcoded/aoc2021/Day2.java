@@ -2,30 +2,39 @@ package me.hardcoded.aoc2021;
 
 import java.util.List;
 
+import me.hardcoded.util.DayBase;
 import me.hardcoded.util.Utils;
 
-public class Day2 {
+public class Day2 extends DayBase {
 	public static void main(String[] args) throws Exception {
-		List<String> list = Utils.readAllLines(2021, "day2");
-		
-		Utils.printf("Day 2\n");
-		Utils.printf("PartOne: %d\n", partOne(list));
-		Utils.printf("PartTwo: %d\n", partTwo(list));
+		new Day2().run();
 	}
 	
-	public static int partOne(List<String> list) throws Exception {
+	public Day2() {
+		super(2021, 2);
+	}
+	
+	public void run() throws Exception {
+		List<String> list = Utils.readAllLines(this);
+		
+		Utils.startPrintf(toString());
+		Utils.printf("PartOne: %s\n", partOne(list));
+		Utils.printf("PartTwo: %s\n", partTwo(list));
+	}
+	
+	public int partOne(List<String> list) throws Exception {
 		int horizontal_position = 0;
 		int depth = 0;
 		
-		for(String line : list) {
+		for (String line : list) {
 			int value = 0;
-			if(line.startsWith("forward ")) {
+			if (line.startsWith("forward ")) {
 				value = Integer.parseInt(line.substring(8));
 				horizontal_position += value;
-			} else if(line.startsWith("down ")) {
+			} else if (line.startsWith("down ")) {
 				value = Integer.parseInt(line.substring(5));
 				depth += value;
-			} else if(line.startsWith("up ")) {
+			} else if (line.startsWith("up ")) {
 				value = Integer.parseInt(line.substring(3));
 				depth -= value;
 			}
@@ -35,21 +44,21 @@ public class Day2 {
 		return result;
 	}
 	
-	public static int partTwo(List<String> list) throws Exception {
+	public int partTwo(List<String> list) throws Exception {
 		int horizontal_position = 0;
 		int aim = 0;
 		int depth = 0;
 		
-		for(String line : list) {
+		for (String line : list) {
 			int value = 0;
-			if(line.startsWith("forward ")) {
+			if (line.startsWith("forward ")) {
 				value = Integer.parseInt(line.substring(8));
 				horizontal_position += value;
 				depth += aim * value;
-			} else if(line.startsWith("down ")) {
+			} else if (line.startsWith("down ")) {
 				value = Integer.parseInt(line.substring(5));
 				aim += value;
-			} else if(line.startsWith("up ")) {
+			} else if (line.startsWith("up ")) {
 				value = Integer.parseInt(line.substring(3));
 				aim -= value;
 			}

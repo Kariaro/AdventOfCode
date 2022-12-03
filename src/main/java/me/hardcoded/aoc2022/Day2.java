@@ -1,20 +1,25 @@
 package me.hardcoded.aoc2022;
 
+import me.hardcoded.util.DayBase;
 import me.hardcoded.util.Utils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.IntStream;
 
-public class Day2 {
+public class Day2 extends DayBase {
 	public static void main(String[] args) throws Exception {
-		List<String> lines = Utils.readAllLines(2022, "day2");
+		new Day2().run();
+	}
+	
+	public Day2() {
+		super(2022, 2);
+	}
+	
+	public void run() throws Exception {
+		List<String> lines = Utils.readAllLines(this);
 		
-		Utils.printf("Day 1\n");
-		Utils.printf("PartOne: %d\n", partOne(lines));
-		Utils.printf("PartTwo: %d\n", partTwo(lines));
+		Utils.startPrintf(toString());
+		Utils.printf("PartOne: %s\n", partOne(lines));
+		Utils.printf("PartTwo: %s\n", partTwo(lines));
 	}
 	
 	public enum Out {
@@ -58,7 +63,7 @@ public class Day2 {
 	}
 	
 	// Solve: 10 min
-	public static int partOne(List<String> lines) throws Exception {
+	public int partOne(List<String> lines) throws Exception {
 		int points = 0;
 		for (String line : lines) {
 			char player = line.charAt(0);
@@ -89,7 +94,7 @@ public class Day2 {
 	}
 	
 	// Solve: 5 min
-	public static int partTwo(List<String> lines) throws Exception {
+	public int partTwo(List<String> lines) throws Exception {
 		int points = 0;
 		for (String line : lines) {
 			char player = line.charAt(0);
