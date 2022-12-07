@@ -7,6 +7,7 @@ import me.hardcoded.util.Utils;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.List;
+import java.util.Locale;
 
 public class Aoc2022 {
 	public static void main(String[] args) throws Exception {
@@ -19,7 +20,9 @@ public class Aoc2022 {
 		
 		for (DayBase day : days) {
 			out.println("=".repeat(30));
+			long time = System.nanoTime();
 			day.run();
+			out.printf(Locale.US, "Day took %.2f ms\n", (System.nanoTime() - time) / 1000000.0f);
 		}
 	}
 }
