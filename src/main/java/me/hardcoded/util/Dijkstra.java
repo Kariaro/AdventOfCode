@@ -2,12 +2,12 @@ package me.hardcoded.util;
 
 import java.util.*;
 
-public class Djikstra {
-	public static class Node {
-		private Map<Node, Long> adjacent = new LinkedHashMap<>();
+public interface Dijkstra {
+	class Node {
+		private final Map<Node, Long> adjacent = new LinkedHashMap<>();
 		private long distance = Long.MAX_VALUE;
-		
 		private long value;
+		
 		public Node(long value) {
 			this.value = value;
 		}
@@ -28,9 +28,13 @@ public class Djikstra {
 		public long getDistance() {
 			return distance;
 		}
+		
+		public void reset() {
+			distance = Long.MAX_VALUE;
+		}
 	}
 	
-	public static long getShortestDistance(Node start, Node end) {
+	static long getShortestDistance(Node start, Node end) {
 		start.distance = 0;
 		
 		Set<Node> settled = new HashSet<>();
@@ -42,14 +46,13 @@ public class Djikstra {
 			long currentDistance = current.distance;
 			
 			unsettled.remove(current);
-			for (Map.Entry<Node, Long> entry : current.adjacent.entrySet()) {
+			for (var entry : current.adjacent.entrySet()) {
 				Node adjacent = entry.getKey();
 				if (!settled.contains(adjacent)) {
 					long nextDistance = currentDistance + entry.getValue();
 					if (nextDistance < adjacent.distance) {
 						adjacent.distance = nextDistance;
 					}
-					
 					unsettled.add(adjacent);
 				}
 			}

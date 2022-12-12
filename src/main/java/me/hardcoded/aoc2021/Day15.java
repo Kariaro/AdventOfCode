@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.hardcoded.util.DayBase;
-import me.hardcoded.util.Djikstra;
+import me.hardcoded.util.Dijkstra;
 import me.hardcoded.util.Utils;
 
 public class Day15 extends DayBase {
@@ -28,22 +28,22 @@ public class Day15 extends DayBase {
 		Utils.printf("PartTwo: %s\n", partTwo(board, width, height));
 	}
 	
-	private static long djikstra(List<long[]> board, int width, int height) {
-		Djikstra.Node[][] nodes = new Djikstra.Node[height][width];
+	private static long dijkstra(List<long[]> board, int width, int height) {
+		Dijkstra.Node[][] nodes = new Dijkstra.Node[height][width];
 		
 		for (int i = 0; i < height; i++) {
 			long[] values = board.get(i);
 			for (int j = 0; j < width; j++) {
-				nodes[i][j] = new Djikstra.Node(values[j]);
+				nodes[i][j] = new Dijkstra.Node(values[j]);
 			}
 		}
 		
 		for (int i = 0; i < height - 1; i++) {
 			for (int j = 0; j < width - 1; j++) {
-				Djikstra.Node n00 = nodes[i    ][j    ];
-				Djikstra.Node n10 = nodes[i + 1][j    ];
-				Djikstra.Node n01 = nodes[i    ][j + 1];
-				Djikstra.Node n11 = nodes[i + 1][j + 1];
+				Dijkstra.Node n00 = nodes[i    ][j    ];
+				Dijkstra.Node n10 = nodes[i + 1][j    ];
+				Dijkstra.Node n01 = nodes[i    ][j + 1];
+				Dijkstra.Node n11 = nodes[i + 1][j + 1];
 				
 				// Horizontal
 				n00.connectNodes(n10);
@@ -55,12 +55,12 @@ public class Day15 extends DayBase {
 			}
 		}
 		
-		return Djikstra.getShortestDistance(nodes[0][0], nodes[height - 1][width - 1]);
+		return Dijkstra.getShortestDistance(nodes[0][0], nodes[height - 1][width - 1]);
 	}
 	
 	// Solve: 86 min
 	public long partOne(List<long[]> board, int width, int height) throws Exception {
-		return djikstra(board, width, height);
+		return dijkstra(board, width, height);
 	}
 	
 	// Solve: 7 min
@@ -82,6 +82,6 @@ public class Day15 extends DayBase {
 			}
 		}
 
-		return djikstra(largeBoard, width * 5, height * 5);
+		return dijkstra(largeBoard, width * 5, height * 5);
 	}
 }
