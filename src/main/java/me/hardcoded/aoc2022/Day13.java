@@ -14,6 +14,14 @@ public class Day13 extends DayBase {
 		super(2022, 13);
 	}
 	
+	public void run() throws Exception {
+		List<String> lines = Utils.readAllLines(this);
+		
+		Utils.startPrintf(toString());
+		Utils.printf("PartOne: %s\n", partOne(lines));
+		Utils.printf("PartTwo: %s\n", partTwo(lines));
+	}
+	
 	static class Packet {
 		private final List<Packet> packets = new ArrayList<>();
 		private Long value;
@@ -35,14 +43,6 @@ public class Day13 extends DayBase {
 		public int size() {
 			return packets.size();
 		}
-	}
-	
-	public void run() throws Exception {
-		List<String> lines = Utils.readAllLines(this);
-		
-		Utils.startPrintf(toString());
-		Utils.printf("PartOne: %s\n", partOne(lines));
-		Utils.printf("PartTwo: %s\n", partTwo(lines));
 	}
 	
 	private Packet processPacket(String line) {

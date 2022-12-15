@@ -14,16 +14,6 @@ public class Day4 extends DayBase {
 		super(2022, 4);
 	}
 	
-	record Range(long a, long b) {
-		boolean contains(Range other) {
-			return other.a >= a && other.b <= b;
-		}
-		
-		boolean overlap(Range other) {
-			return a <= other.b && b >= other.a;
-		}
-	}
-	
 	public void run() throws Exception {
 		List<Range[]> lines = Utils.readAllLines(this).stream().map(line -> {
 			int[] array = Arrays.stream(line.split("[,-]")).mapToInt(Integer::parseInt).toArray();
@@ -33,6 +23,16 @@ public class Day4 extends DayBase {
 		Utils.startPrintf(toString());
 		Utils.printf("PartOne: %s\n", partOne(lines));
 		Utils.printf("PartTwo: %s\n", partTwo(lines));
+	}
+	
+	record Range(long a, long b) {
+		boolean contains(Range other) {
+			return other.a >= a && other.b <= b;
+		}
+		
+		boolean overlap(Range other) {
+			return a <= other.b && b >= other.a;
+		}
 	}
 	
 	// Solve: 9 min

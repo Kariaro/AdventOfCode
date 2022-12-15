@@ -14,6 +14,27 @@ public class Day11 extends DayBase {
 		super(2022, 11);
 	}
 	
+	public void run() throws Exception {
+		List<String> lines = Utils.readAllLines(this);
+		
+		List<Monkey> monkeys = new ArrayList<>();
+		ListIterator<String> iter = lines.listIterator();
+		while (iter.hasNext()) {
+			monkeys.add(new Monkey(iter));
+		}
+		
+		Utils.startPrintf(toString());
+		Utils.printf("PartOne: %s\n", partOne(monkeys));
+		
+		monkeys = new ArrayList<>();
+		iter = lines.listIterator();
+		while (iter.hasNext()) {
+			monkeys.add(new Monkey(iter));
+		}
+		
+		Utils.printf("PartTwo: %s\n", partTwo(monkeys));
+	}
+	
 	static class Monkey {
 		final List<Long> items;
 		final String operation;
@@ -34,27 +55,6 @@ public class Day11 extends DayBase {
 				iter.next();
 			}
 		}
-	}
-	
-	public void run() throws Exception {
-		List<String> lines = Utils.readAllLines(this);
-		
-		List<Monkey> monkeys = new ArrayList<>();
-		ListIterator<String> iter = lines.listIterator();
-		while (iter.hasNext()) {
-			monkeys.add(new Monkey(iter));
-		}
-		
-		Utils.startPrintf(toString());
-		Utils.printf("PartOne: %s\n", partOne(monkeys));
-		
-		monkeys = new ArrayList<>();
-		iter = lines.listIterator();
-		while (iter.hasNext()) {
-			monkeys.add(new Monkey(iter));
-		}
-		
-		Utils.printf("PartTwo: %s\n", partTwo(monkeys));
 	}
 	
 	public long performOperation(String opr, long worryLevel) {

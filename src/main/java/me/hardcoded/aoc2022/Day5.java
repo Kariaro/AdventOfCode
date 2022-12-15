@@ -18,8 +18,6 @@ public class Day5 extends DayBase {
 		super(2022, 5);
 	}
 	
-	record Command(int count, int from, int to) {}
-	
 	public void run() throws Exception {
 		List<String> lines = Utils.readAllLines(this);
 		
@@ -58,6 +56,8 @@ public class Day5 extends DayBase {
 		Utils.printf("PartOne: %s\n", partOne(copy(boxes), commands));
 		Utils.printf("PartTwo: %s\n", partTwo(copy(boxes), commands));
 	}
+	
+	record Command(int count, int from, int to) {}
 	
 	private List<LinkedList<Character>> copy(List<LinkedList<Character>> list) {
 		List<LinkedList<Character>> result = new ArrayList<>();
